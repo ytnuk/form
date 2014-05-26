@@ -1,6 +1,8 @@
 {
     "name": "webedit/form",
     "require": {
+        "nette/application": "dev-master",
+        "nette/forms": "dev-master",
         "nextras/forms": "dev-master"
     },
     "autoload": {
