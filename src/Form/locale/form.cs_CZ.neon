@@ -1,0 +1,8 @@
+button:
+    group: Akce
+    add: Přidat
+    edit: Upravit
+    delete: Smazat
+    save: Uložit změny
+select:
+    prompt: '- vyberte -'

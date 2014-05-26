@@ -1,0 +1,11 @@
+{
+    "name": "webedit/form",
+    "require": {
+        "nextras/forms": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "WebEdit\\": "src/"
+        }
+    }
+}
