@@ -1,3 +1,0 @@
-services:
-    - WebEdit\Form\Factory
-    - WebEdit\Form\Control\Factory

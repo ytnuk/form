@@ -4,7 +4,7 @@ namespace WebEdit\Form;
 
 use WebEdit;
 
-class Control extends WebEdit\Control {
+abstract class Control extends WebEdit\Control {
 
     protected $facade;
 
