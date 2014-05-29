@@ -6,15 +6,9 @@ use Nette\Application;
 
 final class Form extends Application\UI\Form {
 
-    private $entity;
-
     public function __construct(Translation\Translator $translator) {
         $this->setTranslator($translator);
         $this->setRenderer(new Form\Renderer);
-    }
-
-    public function setEntity($entity) {
-        $this->entity = $entity;
     }
 
     public function getValues($asArray = TRUE) {
