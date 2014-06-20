@@ -1,7 +1,7 @@
 {
     "name": "webedit/form",
     "require": {
-        "webedit/core": "dev-master",
+        "webedit/application": "dev-master",
         "nette/application": "dev-master",
         "nette/forms": "dev-master"
     },

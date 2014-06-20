@@ -2,9 +2,9 @@
 
 namespace WebEdit\Form;
 
-use WebEdit;
+use WebEdit\Application;
 
-abstract class Control extends WebEdit\Control {
+abstract class Control extends Application\Control {
 
     protected $form;
 
