@@ -3,6 +3,7 @@
 namespace WebEdit\Form;
 
 use Nette\Forms;
+use WebEdit\Form;
 use WebEdit;
 
 abstract class Container extends Forms\Container {
@@ -13,7 +14,7 @@ abstract class Container extends Forms\Container {
 
     protected function attached($form) {
         parent::attached($form);
-        if ($form instanceof WebEdit\Form) {
+        if ($form instanceof Form) {
             $reflection = new WebEdit\Reflection($this);
             $form->addGroup($reflection->getModuleName('group'));
             $this->currentGroup = $this->form->currentGroup;

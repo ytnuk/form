@@ -8,7 +8,6 @@ final class Form extends Application\UI\Form {
 
     public function __construct(Translation\Translator $translator) {
         $this->setTranslator($translator);
-        $this->setRenderer(new Form\Renderer);
     }
 
     public function getValues($asArray = TRUE) {

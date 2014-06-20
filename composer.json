@@ -3,8 +3,7 @@
     "require": {
         "webedit/core": "dev-master",
         "nette/application": "dev-master",
-        "nette/forms": "dev-master",
-        "nextras/forms": "dev-master"
+        "nette/forms": "dev-master"
     },
     "autoload": {
         "psr-4": {
