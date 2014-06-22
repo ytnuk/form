@@ -6,8 +6,8 @@ use Nette\Application;
 
 final class Form extends Application\UI\Form {
 
-    public function __construct(Translation\Translator $translator) {
-        $this->setTranslator($translator);
+    public function __construct() {
+        parent::__construct(NULL, NULL);
     }
 
     public function getValues($asArray = TRUE) {
