@@ -3,8 +3,9 @@
 namespace WebEdit\Form;
 
 use WebEdit\Application;
+use WebEdit\Translation;
 
-final class Extension extends Application\Extension {
+final class Extension extends Application\Extension implements Translation\Provider {
 
     private $defaults = [
         'renderer' => 'WebEdit\Form\Renderer'
