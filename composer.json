@@ -2,7 +2,7 @@
     "name": "webedit/form",
     "require": {
         "webedit/application": "dev-master",
-        "nette/application": "dev-master",
+        "webedit/translation": "dev-master",
         "nette/forms": "dev-master"
     },
     "autoload": {
