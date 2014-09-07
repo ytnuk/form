@@ -1,5 +1,11 @@
 {
     "name": "webedit/form",
+    "type": "webedit-module",
+    "extra": {
+        "extensions": {
+            "form": "WebEdit\\Form\\Extension"
+        }
+    },
     "require": {
         "webedit/bootstrap": "dev-master",
         "webedit/application": "dev-master",
