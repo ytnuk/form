@@ -2,10 +2,10 @@
 
 namespace WebEdit\Form;
 
-use WebEdit\Bootstrap;
+use WebEdit\Module;
 use WebEdit\Translation;
 
-final class Extension extends Bootstrap\Extension implements Translation\Provider {
+final class Extension extends Module\Extension implements Translation\Provider {
 
     private $defaults = [
         'renderer' => 'WebEdit\Form\Renderer'
