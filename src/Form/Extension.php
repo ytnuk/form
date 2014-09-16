@@ -2,27 +2,37 @@
 
 namespace WebEdit\Form;
 
+use WebEdit\Application;
+use WebEdit\Form;
 use WebEdit\Module;
 use WebEdit\Translation;
 
-final class Extension extends Module\Extension implements Translation\Provider {
+final class Extension extends Module\Extension implements Translation\Provider, Application\Provider
+{
 
-    private $defaults = [
+    protected $resources = [
         'renderer' => 'WebEdit\Form\Renderer'
     ];
 
-    public function loadConfiguration() {
-        $config = $this->getConfig($this->defaults);
-        $builder = $this->getContainerBuilder();
-        $builder->addDefinition($this->prefix('factory'))
-                ->setImplement('WebEdit\Form\Factory')
-                ->addSetup('setRenderer', [new $config['renderer']]);
-    }
-
-    public function beforeCompile() {
+    public function beforeCompile()
+    {
         $builder = $this->getContainerBuilder();
         $builder->getDefinition($this->prefix('factory'))
-                ->addSetup('setTranslator', [$builder->getDefinition('translation.default')]);
+            ->addSetup('setTranslator', [$builder->getDefinition('translation.default')]);
+    }
+
+    public function getApplicationResources()
+    {
+        return [
+            'services' => [
+                $this->prefix('factory') => [
+                    'class' => Form\Factory::class,
+                    'setup' => [
+                        'setRenderer' => [$this->resources['renderer']],
+                    ]
+                ]
+            ]
+        ];
     }
 
 }

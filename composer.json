@@ -10,7 +10,8 @@
         "webedit/module": "dev-master",
         "webedit/application": "dev-master",
         "webedit/translation": "dev-master",
-        "nette/forms": "dev-master"
+        "nette/forms": "dev-master",
+        "nette/application": "dev-master"
     },
     "autoload": {
         "psr-4": {
