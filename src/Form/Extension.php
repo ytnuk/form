@@ -10,9 +10,12 @@ use WebEdit\Translation;
 final class Extension extends Module\Extension implements Translation\Provider, Application\Provider
 {
 
-    protected $resources = [
-        'renderer' => 'WebEdit\Form\Renderer'
-    ];
+    public function getResources()
+    {
+        return [
+            'renderer' => 'WebEdit\Form\Renderer'
+        ];
+    }
 
     public function beforeCompile()
     {
@@ -28,7 +31,7 @@ final class Extension extends Module\Extension implements Translation\Provider, 
                 $this->prefix('factory') => [
                     'class' => Form\Factory::class,
                     'setup' => [
-                        'setRenderer' => [$this->resources['renderer']],
+                        'setRenderer' => [$this['renderer']],
                     ]
                 ]
             ]
