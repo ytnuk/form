@@ -11,7 +11,7 @@ abstract class Container extends Forms\Container
 
     public function __construct()
     {
-        $this->monitor('WebEdit\Form');
+        $this->monitor(Form::class);
     }
 
     protected function attached($form)

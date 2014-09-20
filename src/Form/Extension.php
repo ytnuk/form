@@ -13,7 +13,7 @@ final class Extension extends Module\Extension implements Translation\Provider, 
     public function getResources()
     {
         return [
-            'renderer' => 'WebEdit\Form\Renderer'
+            'renderer' => Form\Renderer::class
         ];
     }
 
@@ -28,11 +28,13 @@ final class Extension extends Module\Extension implements Translation\Provider, 
     {
         return [
             'services' => [
+                $this->prefix('renderer') => $this['renderer'],
                 $this->prefix('factory') => [
                     'class' => Form\Factory::class,
                     'setup' => [
-                        'setRenderer' => [$this['renderer']],
-                    ]
+                        'setRenderer' => [$this->prefix('renderer', TRUE)],
+                    ],
+                    'parameters' => ['entity']
                 ]
             ]
         ];
