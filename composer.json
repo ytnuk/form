@@ -11,6 +11,7 @@
         "webedit/application": "dev-master",
         "webedit/translation": "dev-master",
         "nette/forms": "dev-master",
+        "nextras/forms": "dev-master",
         "nette/application": "dev-master"
     },
     "autoload": {

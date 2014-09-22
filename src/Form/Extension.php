@@ -2,6 +2,7 @@
 
 namespace WebEdit\Form;
 
+use Nextras\Forms;
 use WebEdit\Application;
 use WebEdit\Form;
 use WebEdit\Module;
@@ -13,7 +14,7 @@ final class Extension extends Module\Extension implements Translation\Provider, 
     public function getResources()
     {
         return [
-            'renderer' => Form\Renderer::class
+            'renderer' => Forms\Rendering\Bs3FormRenderer::class
         ];
     }
 
