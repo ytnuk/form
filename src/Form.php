@@ -4,7 +4,7 @@ namespace WebEdit;
 
 use Nette\Application;
 
-final class Form extends Application\UI\Form
+class Form extends Application\UI\Form
 {
 
     public $onAdd = [];

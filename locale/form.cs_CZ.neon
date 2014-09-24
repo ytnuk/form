@@ -4,5 +4,3 @@ button:
     edit: Upravit
     delete: Smazat
     save: Uložit změny
-select:
-    prompt: '- vyberte -'

@@ -4,5 +4,3 @@ button:
     edit: Edit
     delete: Delete
     save: Save changes
-select:
-    prompt: '- select one -'
