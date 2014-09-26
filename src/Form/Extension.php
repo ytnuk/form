@@ -34,8 +34,7 @@ final class Extension extends Module\Extension implements Translation\Provider, 
                     'class' => Form\Factory::class,
                     'setup' => [
                         'setRenderer' => [$this->prefix('renderer', TRUE)],
-                    ],
-                    'parameters' => ['entity']
+                    ]
                 ]
             ]
         ];

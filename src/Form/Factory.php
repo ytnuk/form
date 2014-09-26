@@ -11,5 +11,5 @@ interface Factory
     /**
      * @return Form
      */
-    public function create($entity);
+    public function create();
 }
