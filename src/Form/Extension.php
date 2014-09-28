@@ -21,22 +21,22 @@ final class Extension extends Module\Extension implements Translation\Provider, 
     public function beforeCompile()
     {
         $builder = $this->getContainerBuilder();
-        $builder->getDefinition($this->prefix('factory'))
-            ->addSetup('setTranslator', [$builder->getDefinition('translation.default')]);
+        $translator = $builder->getDefinition('translation.default');
+        foreach ($this['factories'] as $name => $factory) {
+            $builder->getDefinition($name)
+                ->addSetup('setTranslator', [$translator]);
+        }
     }
 
     public function getApplicationResources()
     {
         return [
             'services' => [
-                $this->prefix('renderer') => $this['renderer'],
-                $this->prefix('factory') => [
-                    'class' => Form\Factory::class,
-                    'setup' => [
-                        'setRenderer' => [$this->prefix('renderer', TRUE)],
-                    ]
-                ]
-            ]
+                    $this->prefix('renderer') => $this['renderer']
+                ] + array_map(function ($factory) {
+                    $factory['setup']['setRenderer'] = [$this->prefix('renderer', TRUE)];
+                    return $factory;
+                }, $this['factories'])
         ];
     }
 

@@ -1,6 +1,5 @@
-button:
+action:
     group: Akce
     add: Přidat
     edit: Upravit
     delete: Smazat
-    save: Uložit změny

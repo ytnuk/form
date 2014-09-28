@@ -1,6 +1,5 @@
-button:
+action:
     group: Actions
     add: Add
     edit: Edit
     delete: Delete
-    save: Save changes
