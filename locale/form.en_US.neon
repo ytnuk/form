@@ -1,5 +1,14 @@
 action:
     group: Actions
-    add: Add
-    edit: Edit
-    delete: Delete
+    add:
+        label: Add
+        success:
+            message: Adding was successfull.
+    edit:
+        label: Edit
+        success:
+            message: Editing was successfull.
+    delete:
+        label: Delete
+        success:
+            message: Deleting was successfull.

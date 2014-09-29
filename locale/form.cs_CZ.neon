@@ -1,5 +1,14 @@
 action:
     group: Akce
-    add: Přidat
-    edit: Upravit
-    delete: Smazat
+    add:
+        label: Přidat
+        success:
+            message: Přidání proběhlo v pořádku.
+    edit:
+        label: Upravit
+        success:
+            message: Úprava proběhla v pořádku.
+    delete:
+        label: Smazat
+        success:
+            message: Smazání proběhlo v pořádku.
