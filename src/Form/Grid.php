@@ -21,11 +21,18 @@ final class Grid extends Application\Control
     private $active;
     private $persistActive; //TODO: implement
     private $link;
+    private $filteredInputs;
 
     public function __construct(callable $form, $items)
     {
         $this->form = $form;
         $this->items = $items;
+    }
+
+    public function filterInputs(array $filteredInputs)
+    {
+        $this->filteredInputs = $filteredInputs;
+        return $this;
     }
 
     public function filter($button)
@@ -114,14 +121,11 @@ final class Grid extends Application\Control
                 'id' => $key,
                 'item' => $item,
                 'form' => $form,
-                'inputs' => array_filter($controls, function ($control) use ($item) {
+                'inputs' => array_filter($controls, function ($control) use ($form, $item) {
                     if ($item === NULL) {
                         $control->setAttribute('onchange', 'this.form.filter.click()');
                     }
-                    return !$control instanceof Forms\Controls\Button && !$control instanceof Forms\Controls\HiddenField;
-                }),
-                'buttons' => array_filter($controls, function ($control) {
-                    return $control instanceof Forms\Controls\Button;
+                    return !$control instanceof Forms\Controls\HiddenField;
                 }),
                 'hidden' => array_filter($controls, function ($control) {
                     return $control instanceof Forms\Controls\HiddenField;
@@ -138,6 +142,7 @@ final class Grid extends Application\Control
         $this->template->filter = $this->filter;
         $this->template->orderBy = $this->arrayToHtmlName($this->order, $sort);
         $this->template->order = $sort;
+        $this->template->filteredInputs = $this->filteredInputs;
     }
 
     private function arrayToHtmlName(array $values, &$value = NULL, $wrap = FALSE)

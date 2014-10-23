@@ -8,7 +8,7 @@
                     </a>
                 </th>
                 <th n:foreach="reset($items)->inputs as $input">
-                    <a n:href="order $input->getHtmlName()" n:class="btn,btn-info,btn-sm,$input->getHtmlName()===$orderBy?active">
+                    <a n:href="order $input->getHtmlName()" n:class="btn,btn-info,btn-sm,$input->getHtmlName()===$orderBy?active" n:if="!$input instanceof \Nette\Forms\Controls\Button">
                         <i class="glyphicon glyphicon-sort{if $input->getHtmlName() === $orderBy}-by-attributes{if $order === 'DESC'}-alt{/if}{/if}"></i>
                     </a>
                     {label $input /}
@@ -22,16 +22,25 @@
                         <a href="{if $item->link && $item->active && (!$filter || $item->item)}{$item->link}{elseif $item->item}{link this#{$item->form->getElementPrototype()->id} active=>$item->id}{else}{link this filter=>NULL}{/if}" class="btn btn-block btn-{if $item->link && $item->active && (!$filter || $item->item)}primary{elseif $item->item}default{if $item->active} disabled{/if}{else}danger{if !$filter} disabled{/if}{/if}">
                             <i class="glyphicon glyphicon-{if $item->link && $item->active && (!$filter || $item->item)}new-window{elseif $item->item}edit{else}remove{/if}"></i>
                         </a>
+                        {foreach $item->hidden as $hidden}
+                            {input $hidden}
+                        {/foreach}
                     </th>
                     <td n:foreach="$item->inputs as $input">
                         {input $input disabled=>!$item->active,class=>form-control}
                     </td>
-                    <tr n:if="$item->active">
-                        <td colspan="{count($item->inputs)}" n:inner-foreach="$item->buttons as $button">
-                            {input $button class=>[btn,btn-sm,$iterator->first?btn-primary:btn-default]}
-                        </td>
-                        <td n:inner-foreach="$item->hidden as $hidden">
-                            {input $hidden}
+                    <tr n:if="$item->active && $filteredInputs">
+                        <td colspan="{count($item->inputs) + 1}">
+                            <a class="btn btn-default btn-block btn-sm" data-toggle="collapse" data-target=".{$uniqueId}-collapse-{$item->id}">
+                                <i class="glyphicon glyphicon-arrow-down"></i>
+                                Zobrazit více
+                                <i class="glyphicon glyphicon-arrow-down"></i>
+                            </a>
+                            <div class="collapse {$uniqueId}-collapse-{$item->id}">
+                            {foreach $item->form->getControls() as $control}
+                                {input $control}
+                            {/foreach}
+                            </div>
                         </td>
                     </tr>
                 </form>
