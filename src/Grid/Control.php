@@ -1,11 +1,11 @@
 <?php
 
-namespace WebEdit\Form;
+namespace WebEdit\Grid;
 
 use Nette\Forms;
 use WebEdit\Application;
 
-final class Grid extends Application\Control
+final class Control extends Application\Control
 {
 
     /**
@@ -19,9 +19,9 @@ final class Grid extends Application\Control
     private $form;
     private $items;
     private $active;
-    private $persistActive; //TODO: implement
     private $link;
-    private $filteredInputs;
+    private $filteredInputs = [];
+    private $limitInputs;
 
     public function __construct(callable $form, $items)
     {
@@ -86,9 +86,9 @@ final class Grid extends Application\Control
         return $this;
     }
 
-    public function persistActive($persist = TRUE)
+    public function limitInputs($limit)
     {
-        $this->persistActive = $persist;
+        $this->limitInputs = $limit;
         return $this;
     }
 
@@ -117,15 +117,27 @@ final class Grid extends Application\Control
             foreach ($form->getControls() as $control) {
                 $controls[$control->getHtmlName()] = $control;
             }
+            $inputsCount = 0;
             $this->items[$key] = (object)[
                 'id' => $key,
                 'item' => $item,
                 'form' => $form,
-                'inputs' => array_filter($controls, function ($control) use ($form, $item) {
+                'inputs' => array_filter($controls, function ($control) use ($form, $item, &$inputsCount) {
+                    if ($this->limitInputs && $inputsCount > $this->limitInputs) {
+                        return FALSE;
+                    }
+                    $inputsCount++;
                     if ($item === NULL) {
                         $control->setAttribute('onchange', 'this.form.filter.click()');
                     }
-                    return !$control instanceof Forms\Controls\HiddenField;
+                    $filtered = !(bool)$this->filteredInputs;
+                    foreach ($this->filteredInputs as $name) {
+                        if (strpos($control->getHtmlName(), $name) === 0) {
+                            $filtered = TRUE;
+                            break;
+                        }
+                    }
+                    return $filtered && !$control instanceof Forms\Controls\HiddenField;
                 }),
                 'hidden' => array_filter($controls, function ($control) {
                     return $control instanceof Forms\Controls\HiddenField;

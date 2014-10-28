@@ -29,18 +29,9 @@
                     <td n:foreach="$item->inputs as $input">
                         {input $input disabled=>!$item->active,class=>form-control}
                     </td>
-                    <tr n:if="$item->active && $filteredInputs">
+                    <tr n:if="$item->active">
                         <td colspan="{count($item->inputs) + 1}">
-                            <a class="btn btn-default btn-block btn-sm" data-toggle="collapse" data-target=".{$uniqueId}-collapse-{$item->id}">
-                                <i class="glyphicon glyphicon-arrow-down"></i>
-                                Zobrazit více
-                                <i class="glyphicon glyphicon-arrow-down"></i>
-                            </a>
-                            <div class="collapse {$uniqueId}-collapse-{$item->id}">
-                            {foreach $item->form->getControls() as $control}
-                                {input $control}
-                            {/foreach}
-                            </div>
+                            {control $item->form body}
                         </td>
                     </tr>
                 </form>
