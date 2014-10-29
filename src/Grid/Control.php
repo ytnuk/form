@@ -32,6 +32,7 @@ final class Control extends Application\Control
 	public function filterInputs(array $filteredInputs)
 	{
 		$this->filteredInputs = $filteredInputs;
+
 		return $this;
 	}
 
@@ -55,6 +56,7 @@ final class Control extends Application\Control
 				$data[$key] = $value;
 			}
 		}
+
 		return $data;
 	}
 
@@ -71,7 +73,8 @@ final class Control extends Application\Control
 		$active = $key === key($values);
 		$value = isset($values[$key]) ? $values[$key] : [];
 		unset($values[$key]);
-		$values[$key] = count($keys) ? $this->prepareOrderValues($keys, $value) : (!$active ? 'ASC' : ($value === 'ASC' ? 'DESC' : NULL));
+		$values[$key] = count($keys) ? $this->prepareOrderValues($keys, $value) : (! $active ? 'ASC' : ($value === 'ASC' ? 'DESC' : NULL));
+
 		return $values;
 	}
 
@@ -83,12 +86,14 @@ final class Control extends Application\Control
 	public function setLink($link)
 	{
 		$this->link = $link;
+
 		return $this;
 	}
 
 	public function limitInputs($limit)
 	{
 		$this->limitInputs = $limit;
+
 		return $this;
 	}
 
@@ -97,20 +102,17 @@ final class Control extends Application\Control
 		parent::attached($control);
 		$this->active = $this->getParameter('active');
 		$this->items = call_user_func($this->items, $this->order, $this->filter);
-		if (!is_array($this->items)) {
+		if ( ! is_array($this->items)) {
 			$this->items = iterator_to_array($this->items);
 		}
-		if (!$header = array_search(NULL, $this->items)) {
+		if ( ! $header = array_search(NULL, $this->items)) {
 			$this->items = array_reverse($this->items, TRUE);
 			$this->items[] = NULL;
 			$this->items = array_reverse($this->items, TRUE);
 			$keys = array_keys($this->items);
 			$header = reset($keys);
 		}
-		$this['form'][$header]->setDefaults($this->filter)
-			->addSubmit('filter', 'grid.filter')
-			->setValidationScope(FALSE)
-			->onClick[] = [$this, 'filter'];
+		$this['form'][$header]->setDefaults($this->filter)->addSubmit('filter', 'grid.filter')->setValidationScope(FALSE)->onClick[] = [$this, 'filter'];
 		foreach ($this->items as $key => $item) {
 			$controls = [];
 			$form = $this['form'][$key];
@@ -118,33 +120,26 @@ final class Control extends Application\Control
 				$controls[$control->getHtmlName()] = $control;
 			}
 			$inputsCount = 0;
-			$this->items[$key] = (object)[
-				'id' => $key,
-				'item' => $item,
-				'form' => $form,
-				'inputs' => array_filter($controls, function ($control) use ($form, $item, &$inputsCount) {
-					if ($this->limitInputs && $inputsCount > $this->limitInputs) {
-						return FALSE;
+			$this->items[$key] = (object) ['id' => $key, 'item' => $item, 'form' => $form, 'inputs' => array_filter($controls, function ($control) use ($form, $item, &$inputsCount) {
+				if ($this->limitInputs && $inputsCount > $this->limitInputs) {
+					return FALSE;
+				}
+				$inputsCount++;
+				if ($item === NULL) {
+					$control->setAttribute('onchange', 'this.form.filter.click()');
+				}
+				$filtered = ! (bool) $this->filteredInputs;
+				foreach ($this->filteredInputs as $name) {
+					if (strpos($control->getHtmlName(), $name) === 0) {
+						$filtered = TRUE;
+						break;
 					}
-					$inputsCount++;
-					if ($item === NULL) {
-						$control->setAttribute('onchange', 'this.form.filter.click()');
-					}
-					$filtered = !(bool)$this->filteredInputs;
-					foreach ($this->filteredInputs as $name) {
-						if (strpos($control->getHtmlName(), $name) === 0) {
-							$filtered = TRUE;
-							break;
-						}
-					}
-					return $filtered && !$control instanceof Forms\Controls\HiddenField;
-				}),
-				'hidden' => array_filter($controls, function ($control) {
-					return $control instanceof Forms\Controls\HiddenField;
-				}),
-				'link' => is_callable($this->link) ? call_user_func($this->link, $item) : $this->link,
-				'active' => $key !== $header ? $this->active === (string)$key : TRUE,
-			];
+				}
+
+				return $filtered && ! $control instanceof Forms\Controls\HiddenField;
+			}), 'hidden' => array_filter($controls, function ($control) {
+				return $control instanceof Forms\Controls\HiddenField;
+			}), 'link' => is_callable($this->link) ? call_user_func($this->link, $item) : $this->link, 'active' => $key !== $header ? $this->active === (string) $key : TRUE,];
 		}
 	}
 
@@ -164,6 +159,7 @@ final class Control extends Application\Control
 		if ($wrap) {
 			$key = '[' . $key . ']';
 		}
+
 		return $key . (is_array($value) ? $this->arrayToHtmlName($value, $value, TRUE) : NULL);
 	}
 
@@ -173,5 +169,4 @@ final class Control extends Application\Control
 			return call_user_func($this->form, $this->items[$key]);
 		});
 	}
-
-} 
+}
