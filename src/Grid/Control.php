@@ -5,30 +5,63 @@ namespace WebEdit\Grid;
 use Nette\Forms;
 use WebEdit\Application;
 
+/**
+ * Class Control
+ *
+ * @package WebEdit\Grid
+ */
 final class Control extends Application\Control
 {
 
 	/**
+	 * @var array
 	 * @persistent
 	 */
 	public $order = [];
 	/**
+	 * @var array
 	 * @persistent
 	 */
 	public $filter = [];
+	/**
+	 * @var callable
+	 */
 	private $form;
+	/**
+	 * @var callable
+	 */
 	private $items;
+	/**
+	 * @var string
+	 */
 	private $active;
+	/**
+	 * @var callable
+	 */
 	private $link;
+	/**
+	 * @var array
+	 */
 	private $filteredInputs = [];
+	/**
+	 * @var array
+	 */
 	private $limitInputs;
 
-	public function __construct(callable $form, $items)
+	/**
+	 * @param callable $form
+	 * @param callable $items
+	 */
+	public function __construct(callable $form, callable $items)
 	{
 		$this->form = $form;
 		$this->items = $items;
 	}
 
+	/**
+	 * @param array $filteredInputs
+	 * @return $this
+	 */
 	public function filterInputs(array $filteredInputs)
 	{
 		$this->filteredInputs = $filteredInputs;
@@ -36,7 +69,10 @@ final class Control extends Application\Control
 		return $this;
 	}
 
-	public function filter($button)
+	/**
+	 * @param Forms\Controls\SubmitButton $button
+	 */
+	public function filter(Forms\Controls\SubmitButton $button)
 	{
 		if ($button->getHtmlName() !== 'filter') {
 			return;
@@ -45,6 +81,10 @@ final class Control extends Application\Control
 		$this->redirect('this');
 	}
 
+	/**
+	 * @param array $values
+	 * @return array
+	 */
 	private function prepareFilterValues(array $values)
 	{
 		$data = [];
@@ -60,12 +100,20 @@ final class Control extends Application\Control
 		return $data;
 	}
 
+	/**
+	 * @param string $htmlName
+	 */
 	public function handleOrder($htmlName)
 	{
 		$this->order = $this->prepareOrderValues($this->htmlNameToArray($htmlName), $this->order);
 		$this->redirect('this');
 	}
 
+	/**
+	 * @param array $keys
+	 * @param array $values
+	 * @return array
+	 */
 	private function prepareOrderValues(array $keys, array $values)
 	{
 		$key = array_shift($keys);
@@ -78,25 +126,40 @@ final class Control extends Application\Control
 		return $values;
 	}
 
+	/**
+	 * @param string $htmlName
+	 * @return array
+	 */
 	private function htmlNameToArray($htmlName)
 	{
 		return explode('[', str_replace([']'], NULL, $htmlName));
 	}
 
-	public function setLink($link)
+	/**
+	 * @param callable $link
+	 * @return $this
+	 */
+	public function setLink(callable $link)
 	{
 		$this->link = $link;
 
 		return $this;
 	}
 
-	public function limitInputs($limit)
+	/**
+	 * @param array $limit
+	 * @return $this
+	 */
+	public function limitInputs(array $limit)
 	{
 		$this->limitInputs = $limit;
 
 		return $this;
 	}
 
+	/**
+	 * @param $control
+	 */
 	protected function attached($control)
 	{
 		parent::attached($control);
@@ -152,7 +215,13 @@ final class Control extends Application\Control
 		$this->template->filteredInputs = $this->filteredInputs;
 	}
 
-	private function arrayToHtmlName(array $values, &$value = NULL, $wrap = FALSE)
+	/**
+	 * @param array $values
+	 * @param array $value
+	 * @param bool $wrap
+	 * @return string
+	 */
+	private function arrayToHtmlName(array $values, array &$value = NULL, $wrap = FALSE)
 	{
 		$value = end($values);
 		$key = key($values);
@@ -163,6 +232,9 @@ final class Control extends Application\Control
 		return $key . (is_array($value) ? $this->arrayToHtmlName($value, $value, TRUE) : NULL);
 	}
 
+	/**
+	 * @return Application\Control\Multiplier
+	 */
 	protected function createComponentForm()
 	{
 		return new Application\Control\Multiplier(function ($key) {

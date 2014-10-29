@@ -8,9 +8,17 @@ use WebEdit\Form;
 use WebEdit\Module;
 use WebEdit\Translation;
 
+/**
+ * Class Extension
+ *
+ * @package WebEdit\Form
+ */
 final class Extension extends Module\Extension implements Translation\Provider, Application\Provider
 {
 
+	/**
+	 * @return array
+	 */
 	public function getResources()
 	{
 		return ['renderer' => Forms\Rendering\Bs3FormRenderer::class];
@@ -25,6 +33,9 @@ final class Extension extends Module\Extension implements Translation\Provider, 
 		}
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getApplicationResources()
 	{
 		return ['services' => [$this->prefix('renderer') => $this['renderer']] + array_map(function ($factory) {
