@@ -18,31 +18,38 @@ final class Control extends Application\Control
 	 * @persistent
 	 */
 	public $order = [];
+
 	/**
 	 * @var array
 	 * @persistent
 	 */
 	public $filter = [];
+
 	/**
 	 * @var callable
 	 */
 	private $form;
+
 	/**
 	 * @var callable
 	 */
 	private $items;
+
 	/**
 	 * @var string
 	 */
 	private $active;
+
 	/**
 	 * @var callable
 	 */
 	private $link;
+
 	/**
 	 * @var array
 	 */
 	private $filteredInputs = [];
+
 	/**
 	 * @var array
 	 */
@@ -60,6 +67,7 @@ final class Control extends Application\Control
 
 	/**
 	 * @param array $filteredInputs
+	 *
 	 * @return $this
 	 */
 	public function filterInputs(array $filteredInputs)
@@ -81,6 +89,7 @@ final class Control extends Application\Control
 
 	/**
 	 * @param array $values
+	 *
 	 * @return array
 	 */
 	private function prepareFilterValues(array $values)
@@ -110,6 +119,7 @@ final class Control extends Application\Control
 	/**
 	 * @param array $keys
 	 * @param array $values
+	 *
 	 * @return array
 	 */
 	private function prepareOrderValues(array $keys, array $values)
@@ -126,6 +136,7 @@ final class Control extends Application\Control
 
 	/**
 	 * @param string $htmlName
+	 *
 	 * @return array
 	 */
 	private function htmlNameToArray($htmlName)
@@ -135,6 +146,7 @@ final class Control extends Application\Control
 
 	/**
 	 * @param callable $link
+	 *
 	 * @return $this
 	 */
 	public function setLink(callable $link)
@@ -146,6 +158,7 @@ final class Control extends Application\Control
 
 	/**
 	 * @param array $limit
+	 *
 	 * @return $this
 	 */
 	public function limitInputs(array $limit)
@@ -230,6 +243,7 @@ final class Control extends Application\Control
 	 * @param array $values
 	 * @param array $value
 	 * @param bool $wrap
+	 *
 	 * @return string
 	 */
 	private function arrayToHtmlName(array $values, array &$value = NULL, $wrap = FALSE)
