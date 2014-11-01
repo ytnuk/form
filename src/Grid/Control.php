@@ -74,10 +74,8 @@ final class Control extends Application\Control
 	 */
 	public function filter(Forms\Controls\SubmitButton $button)
 	{
-		if ($button->getHtmlName() !== 'filter') {
-			return;
-		}
-		$this->filter = $this->prepareFilterValues($button->getForm()->getValues(TRUE));
+		$this->filter = $this->prepareFilterValues($button->getForm()
+			->getValues(TRUE));
 		$this->redirect('this');
 	}
 
@@ -175,7 +173,12 @@ final class Control extends Application\Control
 			$keys = array_keys($this->items);
 			$header = reset($keys);
 		}
-		$this['form'][$header]->setDefaults($this->filter)->addSubmit('filter', 'grid.filter')->setValidationScope(FALSE)->onClick[] = [$this, 'filter'];
+		$this['form'][$header]->setDefaults($this->filter)
+			->addSubmit('filter', 'grid.filter')
+			->setValidationScope(FALSE)->onClick[] = [
+			$this,
+			'filter'
+		];
 		foreach ($this->items as $key => $item) {
 			$controls = [];
 			$form = $this['form'][$key];
@@ -183,26 +186,34 @@ final class Control extends Application\Control
 				$controls[$control->getHtmlName()] = $control;
 			}
 			$inputsCount = 0;
-			$this->items[$key] = (object) ['id' => $key, 'item' => $item, 'form' => $form, 'inputs' => array_filter($controls, function ($control) use ($form, $item, &$inputsCount) {
-				if ($this->limitInputs && $inputsCount > $this->limitInputs) {
-					return FALSE;
-				}
-				$inputsCount++;
-				if ($item === NULL) {
-					$control->setAttribute('onchange', 'this.form.filter.click()');
-				}
-				$filtered = ! (bool) $this->filteredInputs;
-				foreach ($this->filteredInputs as $name) {
-					if (strpos($control->getHtmlName(), $name) === 0) {
-						$filtered = TRUE;
-						break;
+			$this->items[$key] = (object) [
+				'id' => $key,
+				'item' => $item,
+				'form' => $form,
+				'inputs' => array_filter($controls, function ($control) use ($form, $item, &$inputsCount) {
+					if ($this->limitInputs && $inputsCount > $this->limitInputs) {
+						return FALSE;
 					}
-				}
+					$inputsCount++;
+					if ($item === NULL) {
+						$control->setAttribute('onchange', 'this.form.filter.click()');
+					}
+					$filtered = ! (bool) $this->filteredInputs;
+					foreach ($this->filteredInputs as $name) {
+						if (strpos($control->getHtmlName(), $name) === 0) {
+							$filtered = TRUE;
+							break;
+						}
+					}
 
-				return $filtered && ! $control instanceof Forms\Controls\HiddenField;
-			}), 'hidden' => array_filter($controls, function ($control) {
-				return $control instanceof Forms\Controls\HiddenField;
-			}), 'link' => is_callable($this->link) ? call_user_func($this->link, $item) : $this->link, 'active' => $key !== $header ? $this->active === (string) $key : TRUE,];
+					return $filtered && ! $control instanceof Forms\Controls\HiddenField;
+				}),
+				'hidden' => array_filter($controls, function ($control) {
+					return $control instanceof Forms\Controls\HiddenField;
+				}),
+				'link' => is_callable($this->link) ? call_user_func($this->link, $item) : $this->link,
+				'active' => $key !== $header ? $this->active === (string) $key : TRUE,
+			];
 		}
 	}
 

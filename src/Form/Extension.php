@@ -2,46 +2,55 @@
 
 namespace WebEdit\Form;
 
+use Kdyby\Translation;
+use Nette\DI;
 use Nextras\Forms;
-use WebEdit\Application;
-use WebEdit\Form;
-use WebEdit\Module;
-use WebEdit\Translation;
+use WebEdit\Config;
 
 /**
  * Class Extension
  *
  * @package WebEdit\Form
  */
-final class Extension extends Module\Extension implements Translation\Provider, Application\Provider
+final class Extension extends DI\CompilerExtension implements Config\Provider
 {
 
 	/**
-	 * @return array
+	 * @var array
 	 */
-	public function getResources()
-	{
-		return ['renderer' => Forms\Rendering\Bs3FormRenderer::class];
-	}
+	private $defaults = [
+		'renderer' => Forms\Rendering\Bs3FormRenderer::class,
+		'forms' => []
+	];
 
 	public function beforeCompile()
 	{
 		$builder = $this->getContainerBuilder();
 		$translator = $builder->getDefinition('translation.default');
-		foreach ($this['factories'] as $name => $factory) {
-			$builder->getDefinition($name)->addSetup('setTranslator', [$translator]);
+		$config = $this->getConfig($this->defaults);
+		foreach ($config['forms'] as $form) {
+			$builder->getDefinition($form)
+				->addSetup('setTranslator', [$translator])
+				->addSetup('setRenderer', ['@' . $this->prefix('renderer')]);
 		}
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getApplicationResources()
+	public function getConfigResources()
 	{
-		return ['services' => [$this->prefix('renderer') => $this['renderer']] + array_map(function ($factory) {
-				$factory['setup']['setRenderer'] = [$this->prefix('renderer', TRUE)];
+		$config = $this->getConfig($this->defaults);
 
-				return $factory;
-			}, $this['factories'])];
+		return [
+			'services' => [
+				$this->prefix('renderer') => $config['renderer']
+			],
+			Translation\DI\TranslationExtension::class => [
+				'dirs' => [
+					__DIR__ . '/../../locale'
+				]
+			]
+		];
 	}
 }
