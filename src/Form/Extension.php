@@ -40,11 +40,9 @@ final class Extension extends DI\CompilerExtension implements Config\Provider
 	 */
 	public function getConfigResources()
 	{
-		$config = $this->getConfig($this->defaults);
-
 		return [
 			'services' => [
-				$this->prefix('renderer') => $config['renderer']
+				$this->prefix('renderer') => $this->defaults['renderer']
 			],
 			Translation\DI\TranslationExtension::class => [
 				'dirs' => [
