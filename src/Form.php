@@ -2,14 +2,14 @@
 
 namespace WebEdit;
 
-use Nette\Application;
+use Nette;
 
 /**
  * Class Form
  *
  * @package WebEdit\Form
  */
-abstract class Form extends Application\UI\Form
+abstract class Form extends Nette\Application\UI\Form
 {
 
 }

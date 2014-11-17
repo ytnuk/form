@@ -2,24 +2,24 @@
 
 namespace WebEdit\Form;
 
-use Kdyby\Translation;
-use Nette\DI;
-use Nextras\Forms;
-use WebEdit\Config;
+use Kdyby;
+use Nette;
+use Nextras;
+use WebEdit;
 
 /**
  * Class Extension
  *
  * @package WebEdit\Form
  */
-final class Extension extends DI\CompilerExtension implements Config\Provider
+final class Extension extends Nette\DI\CompilerExtension implements WebEdit\Config\Provider
 {
 
 	/**
 	 * @var array
 	 */
 	private $defaults = [
-		'renderer' => Forms\Rendering\Bs3FormRenderer::class,
+		'renderer' => Nextras\Forms\Rendering\Bs3FormRenderer::class,
 		'forms' => []
 	];
 
@@ -46,7 +46,7 @@ final class Extension extends DI\CompilerExtension implements Config\Provider
 			'services' => [
 				$this->prefix('renderer') => $config['renderer']
 			],
-			Translation\DI\TranslationExtension::class => [
+			Kdyby\Translation\DI\TranslationExtension::class => [
 				'dirs' => [
 					__DIR__ . '/../../locale'
 				]

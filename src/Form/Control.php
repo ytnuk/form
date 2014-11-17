@@ -2,14 +2,14 @@
 
 namespace WebEdit\Form;
 
-use WebEdit\Application;
+use WebEdit;
 
 /**
  * Class Control
  *
  * @package WebEdit\Form
  */
-abstract class Control extends Application\Control
+abstract class Control extends WebEdit\Application\Control
 {
 
 }

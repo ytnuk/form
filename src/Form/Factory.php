@@ -2,8 +2,7 @@
 
 namespace WebEdit\Form;
 
-use WebEdit\Database;
-use WebEdit\Form;
+use WebEdit;
 
 /**
  * Interface Factory
@@ -14,7 +13,7 @@ interface Factory
 {
 
 	/**
-	 * @return Form
+	 * @return WebEdit\Form
 	 */
 	public function create();
 }

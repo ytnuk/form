@@ -2,14 +2,14 @@
 
 namespace WebEdit\Form;
 
-use Nette\Forms;
+use Nette;
 
 /**
  * Class Container
  *
  * @package WebEdit\Form
  */
-abstract class Container extends Forms\Container
+abstract class Container extends Nette\Forms\Container
 {
 
 }
