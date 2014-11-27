@@ -15,7 +15,7 @@ abstract class Form extends Nette\Application\UI\Form
 	public function message()
 	{
 		$this->getParentControl()
-			->flashMessage($this->formatMessage(), $this->formatMessageType());
+			->flashMessage($this->formatMessage(), $this->getMessageType());
 	}
 
 	protected function getParentControl()
@@ -29,7 +29,7 @@ abstract class Form extends Nette\Application\UI\Form
 		if ($this->submittedBy()) {
 			$message .= '.' . $this->submitted->name;
 		}
-		if ($type = $this->formatMessageType()) {
+		if ($type = $this->getMessageType()) {
 			$message .= '.' . $type;
 		}
 		$message .= '.message';
@@ -47,7 +47,7 @@ abstract class Form extends Nette\Application\UI\Form
 		return $button && $this->submitted->name === $name;
 	}
 
-	protected function formatMessageType()
+	protected function getMessageType()
 	{
 		return $this->isValid() ? 'success' : 'error';
 	}
