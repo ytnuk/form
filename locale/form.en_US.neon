@@ -1,16 +1,6 @@
 action:
-    group: Actions
-    add:
-        label: Add
-        success:
-            message: Adding was successfull.
-    edit:
-        label: Edit
-        success:
-            message: Editing was successfull.
-    delete:
-        label: Delete
-        success:
-            message: Deleting was successfull.
-grid:
-    filter: Filter
+	success:
+		message: Action was successfull.
+	error:
+		message: Action was unsuccessfull.
+

@@ -1,16 +1,5 @@
 action:
-    group: Akce
-    add:
-        label: Přidat
-        success:
-            message: Přidání proběhlo v pořádku.
-    edit:
-        label: Upravit
-        success:
-            message: Úprava proběhla v pořádku.
-    delete:
-        label: Smazat
-        success:
-            message: Smazání proběhlo v pořádku.
-grid:
-    filter: Filtrovat
+	success:
+		message: Akce proběhla v pořádku.
+	error:
+		message: Při akci nastala chyba.
