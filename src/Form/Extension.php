@@ -1,18 +1,18 @@
 <?php
 
-namespace WebEdit\Form;
+namespace Kutny\Form;
 
 use Kdyby;
 use Nette;
 use Nextras;
-use WebEdit;
+use Kutny;
 
 /**
  * Class Extension
  *
- * @package WebEdit\Form
+ * @package Kutny\Form
  */
-final class Extension extends Nette\DI\CompilerExtension implements WebEdit\Config\Provider
+final class Extension extends Nette\DI\CompilerExtension implements Kutny\Config\Provider
 {
 
 	/**

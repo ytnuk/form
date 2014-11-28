@@ -1,7 +1,7 @@
 {
-	"name": "webedit/form",
+	"name": "kutny/form",
 	"require": {
-		"webedit/application": "dev-master",
+		"kutny/application": "dev-master",
 		"kdyby/translation": "dev-master",
 		"nette/forms": "dev-master",
 		"nextras/forms": "dev-master",
@@ -9,7 +9,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"WebEdit\\": "src/"
+			"Kutny\\": "src/"
 		}
 	}
 }

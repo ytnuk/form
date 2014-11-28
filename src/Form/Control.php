@@ -1,15 +1,15 @@
 <?php
 
-namespace WebEdit\Form;
+namespace Kutny\Form;
 
-use WebEdit;
+use Kutny;
 
 /**
  * Class Control
  *
- * @package WebEdit\Form
+ * @package Kutny\Form
  */
-abstract class Control extends WebEdit\Application\Control
+abstract class Control extends Kutny\Application\Control
 {
 
 }

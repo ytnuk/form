@@ -1,13 +1,13 @@
 <?php
 
-namespace WebEdit\Form;
+namespace Kutny\Form;
 
 use Nette;
 
 /**
  * Class Container
  *
- * @package WebEdit\Form
+ * @package Kutny\Form
  */
 abstract class Container extends Nette\Forms\Container
 {

@@ -1,19 +1,19 @@
 <?php
 
-namespace WebEdit\Form;
+namespace Kutny\Form;
 
-use WebEdit;
+use Kutny;
 
 /**
  * Interface Factory
  *
- * @package WebEdit\Form
+ * @package Kutny\Form
  */
 interface Factory
 {
 
 	/**
-	 * @return WebEdit\Form
+	 * @return Kutny\Form
 	 */
 	public function create();
 }
