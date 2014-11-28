@@ -1,15 +1,15 @@
 <?php
 
-namespace Kutny\Form;
+namespace Ytnuk\Form;
 
-use Kutny;
+use Ytnuk;
 
 /**
  * Class Control
  *
- * @package Kutny\Form
+ * @package Ytnuk\Form
  */
-abstract class Control extends Kutny\Application\Control
+abstract class Control extends Ytnuk\Application\Control
 {
 
 }

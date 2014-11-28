@@ -1,7 +1,7 @@
 {
-	"name": "kutny/form",
+	"name": "ytnuk/form",
 	"require": {
-		"kutny/application": "dev-master",
+		"ytnuk/application": "dev-master",
 		"kdyby/translation": "dev-master",
 		"nette/forms": "dev-master",
 		"nextras/forms": "dev-master",
@@ -9,7 +9,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Kutny\\": "src/"
+			"Ytnuk\\": "src/"
 		}
 	}
 }

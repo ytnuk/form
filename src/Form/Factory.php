@@ -1,19 +1,19 @@
 <?php
 
-namespace Kutny\Form;
+namespace Ytnuk\Form;
 
-use Kutny;
+use Ytnuk;
 
 /**
  * Interface Factory
  *
- * @package Kutny\Form
+ * @package Ytnuk\Form
  */
 interface Factory
 {
 
 	/**
-	 * @return Kutny\Form
+	 * @return Ytnuk\Form
 	 */
 	public function create();
 }

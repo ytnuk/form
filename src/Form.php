@@ -1,13 +1,13 @@
 <?php
 
-namespace Kutny;
+namespace Ytnuk;
 
 use Nette;
 
 /**
  * Class Form
  *
- * @package Kutny\Form
+ * @package Ytnuk\Form
  */
 abstract class Form extends Nette\Application\UI\Form
 {

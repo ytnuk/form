@@ -1,18 +1,18 @@
 <?php
 
-namespace Kutny\Form;
+namespace Ytnuk\Form;
 
 use Kdyby;
 use Nette;
 use Nextras;
-use Kutny;
+use Ytnuk;
 
 /**
  * Class Extension
  *
- * @package Kutny\Form
+ * @package Ytnuk\Form
  */
-final class Extension extends Nette\DI\CompilerExtension implements Kutny\Config\Provider
+final class Extension extends Nette\DI\CompilerExtension implements Ytnuk\Config\Provider
 {
 
 	/**
