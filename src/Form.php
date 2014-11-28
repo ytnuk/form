@@ -18,11 +18,17 @@ abstract class Form extends Nette\Application\UI\Form
 			->flashMessage($this->formatMessage(), $this->getMessageType());
 	}
 
+	/**
+	 * @return Nette\Application\UI\Control
+	 */
 	protected function getParentControl()
 	{
 		return $this->lookup(Nette\Application\UI\Control::class);
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function formatMessage()
 	{
 		$message = 'form.action';
@@ -37,6 +43,11 @@ abstract class Form extends Nette\Application\UI\Form
 		return $message;
 	}
 
+	/**
+	 * @param string|bool $name
+	 *
+	 * @return bool
+	 */
 	protected function submittedBy($name = TRUE)
 	{
 		$button = $this->submitted instanceof Nette\Forms\Controls\SubmitButton;
@@ -47,6 +58,9 @@ abstract class Form extends Nette\Application\UI\Form
 		return $button && $this->submitted->name === $name;
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getMessageType()
 	{
 		return $this->isValid() ? 'success' : 'error';
@@ -58,6 +72,9 @@ abstract class Form extends Nette\Application\UI\Form
 			->redirect('this');
 	}
 
+	/**
+	 * @param Nette\Application\UI\Control $control
+	 */
 	protected function attached($control)
 	{
 		if ( ! is_array($this->onSubmit)) {
@@ -71,7 +88,6 @@ abstract class Form extends Nette\Application\UI\Form
 			$this,
 			'redirect'
 		];
-
-		return parent::attached($control);
+		parent::attached($control);
 	}
 }
