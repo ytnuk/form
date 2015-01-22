@@ -48,7 +48,7 @@ abstract class Form extends Nette\Application\UI\Form
 	 *
 	 * @return bool
 	 */
-	protected function submittedBy($name = TRUE)
+	public function submittedBy($name = TRUE)
 	{
 		$button = $this->submitted instanceof Nette\Forms\Controls\SubmitButton;
 		if ($name === TRUE) {
@@ -66,12 +66,6 @@ abstract class Form extends Nette\Application\UI\Form
 		return $this->isValid() ? 'success' : 'error';
 	}
 
-	public function redirect()
-	{
-		$this->getParentControl()
-			->redirect('this');
-	}
-
 	/**
 	 * @param Nette\Application\UI\Control $control
 	 */
@@ -84,10 +78,6 @@ abstract class Form extends Nette\Application\UI\Form
 			$this,
 			'message'
 		]);
-		$this->onSubmit[] = [
-			$this,
-			'redirect'
-		];
 		parent::attached($control);
 	}
 }
