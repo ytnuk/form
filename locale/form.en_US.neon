@@ -1,6 +1,6 @@
 action:
 	success:
 		message: Action was successfull.
-	error:
+	warning:
 		message: Action was unsuccessfull.
 

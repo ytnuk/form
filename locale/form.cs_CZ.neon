@@ -1,5 +1,5 @@
 action:
 	success:
 		message: Akce proběhla v pořádku.
-	error:
+	warning:
 		message: Při akci nastala chyba.

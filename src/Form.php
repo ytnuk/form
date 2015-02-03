@@ -29,7 +29,7 @@ abstract class Form extends Nette\Application\UI\Form
 	/**
 	 * @return string
 	 */
-	protected function formatMessage()
+	protected function formatMessage() //TODO: use onSucces to succes messages and onError for error messages
 	{
 		$message = 'form.action';
 		if ($this->submittedBy()) {
@@ -63,13 +63,13 @@ abstract class Form extends Nette\Application\UI\Form
 	 */
 	protected function getMessageType()
 	{
-		return $this->isValid() ? 'success' : 'error';
+		return $this->isValid() ? 'success' : 'warning';
 	}
 
 	/**
 	 * @param Nette\Application\UI\Control $control
 	 */
-	protected function attached($control)
+	protected function attached($control) //TODO: burn this shit
 	{
 		if ( ! is_array($this->onSubmit)) {
 			$this->onSubmit = [];
