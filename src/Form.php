@@ -14,6 +14,7 @@ abstract class Form extends Nette\Application\UI\Form
 
 	public function message()
 	{
+		//TODO: use Flash/Message storage whene available
 		$this->getParentControl()
 			->flashMessage($this->formatMessage(), $this->getMessageType());
 	}
