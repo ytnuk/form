@@ -14,19 +14,20 @@ abstract class Form extends Nette\Application\UI\Form
 
 	public function message()
 	{
-		//TODO: use Flash/Message storage whene available
-		//TODO: always use $this->parent control for flashmessage, when control is not available after redirecting, show those flashmessages at presenter
-		$this->parent->flashMessage($this->formatMessage(), $this->getMessageType());
+		//TODO: use Flash/Message storage when available
+		//TODO: always use $this->parent control for flashMessage, when control is not available after redirecting, show those flashMessages at presenter
+		$this->getParent()
+			->flashMessage($this->formatMessage(), $this->getMessageType());
 	}
 
 	/**
 	 * @return string
 	 */
-	protected function formatMessage() //TODO: use onSucces to succes messages and onError for error messages
+	protected function formatMessage() //TODO: use onSuccess to success messages and onError for error messages
 	{
 		$message = 'form.action';
-		if ($this->submittedBy()) {
-			$message .= '.' . $this->submitted->name;
+		if ($button = $this->isSubmitted()) {
+			$message .= '.' . $button->getName();
 		}
 		if ($type = $this->getMessageType()) {
 			$message .= '.' . $type;
@@ -34,21 +35,6 @@ abstract class Form extends Nette\Application\UI\Form
 		$message .= '.message';
 
 		return $message;
-	}
-
-	/**
-	 * @param string|bool $name
-	 *
-	 * @return bool
-	 */
-	public function submittedBy($name = TRUE)
-	{
-		$button = $this->submitted instanceof Nette\Forms\Controls\SubmitButton;
-		if ($name === TRUE) {
-			return $button;
-		}
-
-		return $button && $this->submitted->name === $name;
 	}
 
 	/**
