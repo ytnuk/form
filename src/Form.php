@@ -16,8 +16,7 @@ abstract class Form extends Nette\Application\UI\Form
 	{
 		//TODO: use Flash/Message storage when available
 		//TODO: always use $this->parent control for flashMessage, when control is not available after redirecting, show those flashMessages at presenter
-		$this->getParent()
-			->flashMessage($this->formatMessage(), $this->getMessageType());
+		$this->getParent()->flashMessage($this->formatMessage(), $this->getMessageType());
 	}
 
 	/**
