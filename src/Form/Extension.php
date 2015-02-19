@@ -26,7 +26,7 @@ final class Extension extends Nette\DI\CompilerExtension implements Ytnuk\Config
 	public function beforeCompile()
 	{
 		$builder = $this->getContainerBuilder();
-		$translator = $builder->getDefinition('translation.default');
+		$translator = $builder->getDefinition($builder->getByType(Nette\Localization\ITranslator::class));
 		$config = $this->getConfig($this->defaults);
 		foreach ($config['forms'] as $form) {
 			$builder->getDefinition($form)->addSetup('setTranslator', [$translator])->addSetup('setRenderer', ['@' . $this->prefix('renderer')]);
