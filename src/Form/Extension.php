@@ -49,7 +49,8 @@ final class Extension extends Nette\DI\CompilerExtension implements Ytnuk\Config
 					__DIR__ . '/../../locale'
 				]
 			],
-			Kdyby\Replicator\DI\ReplicatorExtension::class => []
+			Kdyby\Replicator\DI\ReplicatorExtension::class => [],
+			Nextras\Forms\DI\FormsExtension::class => []
 		];
 	}
 }
