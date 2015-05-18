@@ -30,6 +30,18 @@ abstract class Form extends Nette\Application\UI\Form
 		array_unshift($this->onError, function () {
 			$this->flashMessage($this->formatFlashMessage('error'), 'danger');
 		});
+		if ( ! is_array($this->onSubmit)) {
+			$this->onSubmit = [];
+		}
+		array_unshift($this->onSubmit, function () {
+			if ($control = $this->lookup(Nette\Application\UI\PresenterComponent::class, FALSE)) {
+				if ($this->presenter->isAjax()) {
+					$control->redrawControl();
+				} else {
+					$control->redirect('this');
+				}
+			}
+		});
 	}
 
 	/**
