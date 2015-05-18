@@ -23,6 +23,9 @@ abstract class Form extends Nette\Application\UI\Form
 		}
 		array_unshift($this->onSuccess, function () {
 			$this->flashMessage($this->formatFlashMessage('success'), 'success');
+			if ( ! $this->presenter->isAjax()) {
+				$this->getControl()->redirect('this');
+			}
 		});
 		if ( ! is_array($this->onError)) {
 			$this->onError = [];
@@ -34,30 +37,31 @@ abstract class Form extends Nette\Application\UI\Form
 			$this->onSubmit = [];
 		}
 		array_unshift($this->onSubmit, function () {
-			if ($control = $this->lookup(Nette\Application\UI\PresenterComponent::class, FALSE)) {
-				if ($this->presenter->isAjax()) {
-					$control->redrawControl();
-				} else {
-					$control->redirect('this');
-				}
+			if ($this->presenter->isAjax()) {
+				$this->getControl()->redrawControl();
 			}
 		});
 	}
 
 	/**
-	 * @param $message
+	 * @param string $message
 	 * @param string $type
-	 * @param Nette\Application\UI\Control $control
 	 *
 	 * @return \stdClass
 	 */
-	public function flashMessage($message, $type = 'info', Nette\Application\UI\Control $control = NULL)
+	public function flashMessage($message, $type = 'info')
 	{
-		if ( ! $control) {
-			$control = $this->lookup(Nette\Application\UI\Control::class);
-		}
+		$control = $this->getControl();
 
 		return $control->flashMessage($message, $type);
+	}
+
+	/**
+	 * @return Nette\Application\UI\Control
+	 */
+	protected function getControl()
+	{
+		return $this->lookup(Nette\Application\UI\Control::class);
 	}
 
 	/**
