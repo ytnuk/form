@@ -15,41 +15,56 @@ abstract class Form extends Nette\Application\UI\Form
 	/**
 	 * @param Nette\Application\UI\Control $control
 	 */
-	protected function attached($control) //TODO: burn this shit
+	protected function attached($control)
 	{
-		if ( ! is_array($this->onError)) {
-			$this->onError = [];
-		}
+		parent::attached($control);
 		if ( ! is_array($this->onSuccess)) {
 			$this->onSuccess = [];
 		}
-		array_unshift($this->onError, function () {
-			$this->message('warning');
-		});
 		array_unshift($this->onSuccess, function () {
-			$this->message('success');
+			$this->flashMessage($this->formatFlashMessage('success'), 'success');
 		});
-		parent::attached($control);
-	}
-
-	public function message($type)
-	{
-		//TODO: use Flash/Message storage when available
-		//TODO: always use $this->parent control for flashMessage, when control is not available after redirecting, show those flashMessages at presenter
-		$this->getParent()->flashMessage($this->formatMessage($type), $type);
+		if ( ! is_array($this->onError)) {
+			$this->onError = [];
+		}
+		array_unshift($this->onError, function () {
+			$this->flashMessage($this->formatFlashMessage('error'), 'danger');
+		});
 	}
 
 	/**
+	 * @param $message
+	 * @param string $type
+	 * @param Nette\Application\UI\Control $control
+	 *
+	 * @return \stdClass
+	 */
+	public function flashMessage($message, $type = 'info', Nette\Application\UI\Control $control = NULL)
+	{
+		if ( ! $control) {
+			$control = $this->lookup(Nette\Application\UI\Control::class);
+		}
+
+		return $control->flashMessage($message, $type);
+	}
+
+	/**
+	 * @param string $type
+	 *
 	 * @return string
 	 */
-	protected function formatMessage($type) //TODO: use onSuccess to success messages and onError for error messages
+	protected function formatFlashMessage($type)
 	{
-		$message = 'form.action';
+		$message = [
+			'form'
+		];
 		if ($button = $this->isSubmitted()) {
-			$message .= '.' . $button->getName();
+			$message = array_merge($message, explode('-', $button->lookupPath(self::class)));
 		}
-		$message .= '.' . $type . '.message';
 
-		return $message;
+		return implode('.', array_merge($message, [
+			$type,
+			'message'
+		]));
 	}
 }
