@@ -23,10 +23,12 @@ abstract class Form extends Nette\Application\UI\Form
 		}
 		array_unshift($this->onSuccess, function () {
 			$this->flashMessage($this->formatFlashMessage('success'), 'success');
+		});
+		$this->onSuccess[] = function () {
 			if ( ! $this->presenter->isAjax()) {
 				$this->getControl()->redirect('this');
 			}
-		});
+		};
 		if ( ! is_array($this->onError)) {
 			$this->onError = [];
 		}
