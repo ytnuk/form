@@ -13,7 +13,7 @@ abstract class Form extends Nette\Application\UI\Form
 {
 
 	/**
-	 * @param Nette\Application\UI\Control $control
+	 * @inheritdoc
 	 */
 	protected function attached($control)
 	{

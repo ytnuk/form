@@ -12,5 +12,8 @@ use Ytnuk;
 abstract class Control extends Ytnuk\Application\Control
 {
 
+	/**
+	 * @return Ytnuk\Form
+	 */
 	abstract protected function createComponentYtnukForm();
 }
