@@ -76,8 +76,9 @@ abstract class Form extends Nette\Application\UI\Form
 		$message = [
 			'form'
 		];
-		if ($button = $this->isSubmitted()) {
-			$message = array_merge($message, explode('-', $button->lookupPath(self::class)));
+		$button = $this->isSubmitted();
+		if ($button instanceof Nette\Forms\Controls\Button && $path = $button->lookupPath(self::class, FALSE)) {
+			$message = array_merge($message, explode('-', $path));
 		}
 
 		return implode('.', array_merge($message, [
