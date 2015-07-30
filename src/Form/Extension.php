@@ -1,5 +1,4 @@
 <?php
-
 namespace Ytnuk\Form;
 
 use Kdyby;
@@ -12,7 +11,9 @@ use Ytnuk;
  *
  * @package Ytnuk\Form
  */
-final class Extension extends Nette\DI\CompilerExtension implements Ytnuk\Config\Provider
+final class Extension
+	extends Nette\DI\CompilerExtension
+	implements Ytnuk\Config\Provider
 {
 
 	/**
@@ -20,7 +21,7 @@ final class Extension extends Nette\DI\CompilerExtension implements Ytnuk\Config
 	 */
 	private $defaults = [
 		'renderer' => Nextras\Forms\Rendering\Bs3FormRenderer::class,
-		'forms' => []
+		'forms' => [],
 	];
 
 	/**
@@ -31,8 +32,17 @@ final class Extension extends Nette\DI\CompilerExtension implements Ytnuk\Config
 		$builder = $this->getContainerBuilder();
 		$translator = $builder->getDefinition($builder->getByType(Nette\Localization\ITranslator::class));
 		$config = $this->getConfig($this->defaults);
-		foreach ($config['forms'] as $form) {
-			$builder->getDefinition($form)->addSetup('setTranslator', [$translator])->addSetup('setRenderer', ['@' . $this->prefix('renderer')]);
+		foreach (
+			$config['forms'] as $form
+		) {
+			$builder->getDefinition($form)->addSetup(
+				'setTranslator',
+				[$translator]
+			)->addSetup(
+				'setRenderer',
+				['@' . $this->prefix('renderer')]
+			)
+			;
 		}
 	}
 
@@ -45,15 +55,15 @@ final class Extension extends Nette\DI\CompilerExtension implements Ytnuk\Config
 
 		return [
 			'services' => [
-				$this->prefix('renderer') => $config['renderer']
+				$this->prefix('renderer') => $config['renderer'],
 			],
 			Kdyby\Translation\DI\TranslationExtension::class => [
 				'dirs' => [
-					__DIR__ . '/../../locale'
-				]
+					__DIR__ . '/../../locale',
+				],
 			],
 			Kdyby\Replicator\DI\ReplicatorExtension::class => [],
-			Nextras\Forms\DI\FormsExtension::class => []
+			Nextras\Forms\DI\FormsExtension::class => [],
 		];
 	}
 }

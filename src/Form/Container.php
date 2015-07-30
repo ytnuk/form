@@ -1,5 +1,4 @@
 <?php
-
 namespace Ytnuk\Form;
 
 use Nette;
@@ -9,7 +8,8 @@ use Nette;
  *
  * @package Ytnuk\Form
  */
-abstract class Container extends Nette\Forms\Container
+abstract class Container
+	extends Nette\Forms\Container
 {
 
 }
