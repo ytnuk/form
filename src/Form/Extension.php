@@ -41,8 +41,7 @@ final class Extension
 			)->addSetup(
 				'setRenderer',
 				['@' . $this->prefix('renderer')]
-			)
-			;
+			);
 		}
 	}
 
