@@ -2,26 +2,17 @@
 namespace Ytnuk;
 
 use Nette;
+use stdClass;
 
-/**
- * Class Form
- *
- * @package Ytnuk\Form
- */
 abstract class Form
 	extends Nette\Application\UI\Form
 {
 
-	/**
-	 * @param string $message
-	 * @param string $type
-	 *
-	 * @return \stdClass
-	 */
 	public function flashMessage(
-		$message,
-		$type = 'info'
-	) {
+		string $message,
+		string $type = 'info'
+	) : stdClass
+	{
 		$control = $this->getControl();
 
 		return $control->flashMessage(
@@ -30,9 +21,6 @@ abstract class Form
 		);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	protected function attached($control)
 	{
 		parent::attached($control);
@@ -78,20 +66,12 @@ abstract class Form
 		);
 	}
 
-	/**
-	 * @return Nette\Application\UI\Control
-	 */
-	protected function getControl()
+	protected function getControl() : Nette\Application\UI\Control
 	{
 		return $this->lookup(Nette\Application\UI\Control::class);
 	}
 
-	/**
-	 * @param string $type
-	 *
-	 * @return string
-	 */
-	protected function formatFlashMessage($type)
+	protected function formatFlashMessage(string $type) : string
 	{
 		$message = [
 			'form',

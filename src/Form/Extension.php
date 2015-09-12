@@ -6,11 +6,6 @@ use Nette;
 use Nextras;
 use Ytnuk;
 
-/**
- * Class Extension
- *
- * @package Ytnuk\Form
- */
 final class Extension
 	extends Nette\DI\CompilerExtension
 	implements Ytnuk\Config\Provider
@@ -24,9 +19,6 @@ final class Extension
 		'forms' => [],
 	];
 
-	/**
-	 * @inheritdoc
-	 */
 	public function beforeCompile()
 	{
 		$builder = $this->getContainerBuilder();
@@ -45,10 +37,7 @@ final class Extension
 		}
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getConfigResources()
+	public function getConfigResources() : array
 	{
 		$config = $this->getConfig($this->defaults);
 
