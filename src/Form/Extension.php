@@ -29,11 +29,11 @@ final class Extension
 			$name
 		);
 		$compiler->addExtension(
-			$this->prefix('replicator'),
+			'kdyby.replicator',
 			new Kdyby\Replicator\DI\ReplicatorExtension
 		);
 		$compiler->addExtension(
-			$this->prefix('controls'),
+			'nextras.forms',
 			new Nextras\Forms\DI\FormsExtension
 		);
 
