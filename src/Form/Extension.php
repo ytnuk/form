@@ -8,7 +8,7 @@ use Ytnuk;
 
 final class Extension
 	extends Nette\DI\CompilerExtension
-	implements Ytnuk\Config\Provider
+	implements Kdyby\Translation\DI\ITranslationProvider
 {
 
 	/**
@@ -19,39 +19,70 @@ final class Extension
 		'forms' => [],
 	];
 
+	public function setCompiler(
+		Nette\DI\Compiler $compiler,
+		$name
+	) : self
+	{
+		$extension = parent::setCompiler(
+			$compiler,
+			$name
+		);
+		$compiler->addExtension(
+			$this->prefix('replicator'),
+			new Kdyby\Replicator\DI\ReplicatorExtension
+		);
+		$compiler->addExtension(
+			$this->prefix('controls'),
+			new Nextras\Forms\DI\FormsExtension
+		);
+
+		return $extension;
+	}
+
+	public function loadConfiguration()
+	{
+		parent::loadConfiguration();
+		$this->validateConfig($this->defaults);
+		$providers = $this->compiler->getExtensions(Provider::class);
+		array_walk(
+			$providers,
+			function (Provider $provider) {
+				$this->config = $this->validateConfig(
+					$this->config,
+					$provider->getFormResources()
+				);
+			}
+		);
+		$builder = $this->getContainerBuilder();
+		$builder->addDefinition($this->prefix('renderer'))->setClass($this->config['renderer']);
+	}
+
 	public function beforeCompile()
 	{
 		$builder = $this->getContainerBuilder();
 		$translator = $builder->getDefinition($builder->getByType(Nette\Localization\ITranslator::class));
-		$config = $this->getConfig($this->defaults);
 		foreach (
-			$config['forms'] as $form
+			$this->config['forms'] as $key => $class
 		) {
-			$builder->getDefinition($form)->addSetup(
-				'setTranslator',
-				[$translator]
-			)->addSetup(
+			$form = $builder->addDefinition($this->prefix('form.' . $key))->setImplement($class);
+			if ($translator) {
+				$form->addSetup(
+					'setTranslator',
+					[$translator]
+				);
+			}
+			$form->addSetup(
 				'setRenderer',
-				['@' . $this->prefix('renderer')]
+				[$this->prefix('@renderer')]
 			);
 		}
 	}
 
-	public function getConfigResources() : array
+	public function getTranslationResources() : array
 	{
-		$config = $this->getConfig($this->defaults);
-
 		return [
-			'services' => [
-				$this->prefix('renderer') => $config['renderer'],
-			],
-			Kdyby\Translation\DI\TranslationExtension::class => [
-				'dirs' => [
-					__DIR__ . '/../../locale',
-				],
-			],
-			Kdyby\Replicator\DI\ReplicatorExtension::class => [],
-			Nextras\Forms\DI\FormsExtension::class => [],
+			__DIR__ . '/../../locale',
 		];
 	}
 }
