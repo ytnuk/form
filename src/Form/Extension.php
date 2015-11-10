@@ -19,25 +19,25 @@ final class Extension
 		'forms' => [],
 	];
 
-	public function setCompiler(
-		Nette\DI\Compiler $compiler,
-		$name
-	) : self
+	public function beforeCompile()
 	{
-		$extension = parent::setCompiler(
-			$compiler,
-			$name
-		);
-		$compiler->addExtension(
-			'kdyby.replicator',
-			new Kdyby\Replicator\DI\ReplicatorExtension
-		);
-		$compiler->addExtension(
-			'nextras.forms',
-			new Nextras\Forms\DI\FormsExtension
-		);
-
-		return $extension;
+		$builder = $this->getContainerBuilder();
+		$translator = $builder->getDefinition($builder->getByType(Nette\Localization\ITranslator::class));
+		foreach (
+			$this->config['forms'] as $key => $class
+		) {
+			$form = $builder->addDefinition($this->prefix('form.' . $key))->setImplement($class);
+			if ($translator) {
+				$form->addSetup(
+					'setTranslator',
+					[$translator]
+				);
+			}
+			$form->addSetup(
+				'setRenderer',
+				[$this->prefix('@renderer')]
+			);
+		}
 	}
 
 	public function loadConfiguration()
@@ -58,25 +58,25 @@ final class Extension
 		$builder->addDefinition($this->prefix('renderer'))->setClass($this->config['renderer']);
 	}
 
-	public function beforeCompile()
+	public function setCompiler(
+		Nette\DI\Compiler $compiler,
+		$name
+	) : self
 	{
-		$builder = $this->getContainerBuilder();
-		$translator = $builder->getDefinition($builder->getByType(Nette\Localization\ITranslator::class));
-		foreach (
-			$this->config['forms'] as $key => $class
-		) {
-			$form = $builder->addDefinition($this->prefix('form.' . $key))->setImplement($class);
-			if ($translator) {
-				$form->addSetup(
-					'setTranslator',
-					[$translator]
-				);
-			}
-			$form->addSetup(
-				'setRenderer',
-				[$this->prefix('@renderer')]
-			);
-		}
+		$extension = parent::setCompiler(
+			$compiler,
+			$name
+		);
+		$compiler->addExtension(
+			'kdyby.replicator',
+			new Kdyby\Replicator\DI\ReplicatorExtension
+		);
+		$compiler->addExtension(
+			'nextras.forms',
+			new Nextras\Forms\DI\FormsExtension
+		);
+
+		return $extension;
 	}
 
 	public function getTranslationResources() : array
