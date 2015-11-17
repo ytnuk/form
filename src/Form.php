@@ -37,7 +37,7 @@ abstract class Form
 			}
 		);
 		$this->onSuccess[] = function () {
-			if ( ! $this->presenter->isAjax()) {
+			if ( ! $this->getPresenter()->isAjax()) {
 				$this->getControl()->redirect('this');
 			}
 		};
@@ -59,9 +59,7 @@ abstract class Form
 		array_unshift(
 			$this->onSubmit,
 			function () {
-				if ($this->presenter->isAjax()) {
-					$this->getControl()->redrawControl();
-				}
+				$this->getControl()->redrawControl();
 			}
 		);
 	}
