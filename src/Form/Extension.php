@@ -63,10 +63,6 @@ final class Extension
 		$name
 	) : self
 	{
-		$extension = parent::setCompiler(
-			$compiler,
-			$name
-		);
 		$compiler->addExtension(
 			'kdyby.replicator',
 			new Kdyby\Replicator\DI\ReplicatorExtension
@@ -76,7 +72,10 @@ final class Extension
 			new Nextras\Forms\DI\FormsExtension
 		);
 
-		return $extension;
+		return parent::setCompiler(
+			$compiler,
+			$name
+		);
 	}
 
 	public function getTranslationResources() : array
