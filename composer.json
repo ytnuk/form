@@ -1,6 +1,6 @@
 {
 	"name": "ytnuk/form",
-	"type": "ytnuk/module",
+	"type": "ytnuk-module",
 	"require": {
 		"ytnuk/application": "dev-master",
 		"kdyby/translation": "dev-master",
