@@ -1,8 +1,6 @@
 {
 	"name": "ytnuk/form",
-	"type": "ytnuk-module",
 	"require": {
-		"ytnuk/module": "dev-master",
 		"ytnuk/application": "dev-master",
 		"kdyby/translation": "dev-master",
 		"nette/forms": "dev-master",
