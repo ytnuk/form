@@ -2,9 +2,9 @@
 	"name": "ytnuk/form",
 	"extra": {
 		"extensions": {
-			"ytnuk/form": "Ytnuk\\Form\\Extension",
-			"kdyby/replicator": "Kdyby\\Replicator\\DI\\ReplicatorExtension",
-			"nextras/forms": "Nextras\\Forms\\DI\\FormsExtension"
+			"ytnuk_form": "Ytnuk\\Form\\Extension",
+			"kdyby_replicator": "Kdyby\\Replicator\\DI\\ReplicatorExtension",
+			"nextras_forms": "Nextras\\Forms\\DI\\FormsExtension"
 		}
 	},
 	"require": {
