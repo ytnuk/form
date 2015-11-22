@@ -58,26 +58,6 @@ final class Extension
 		$builder->addDefinition($this->prefix('renderer'))->setClass($this->config['renderer']);
 	}
 
-	public function setCompiler(
-		Nette\DI\Compiler $compiler,
-		$name
-	) : self
-	{
-		$compiler->addExtension(
-			'kdyby.replicator',
-			new Kdyby\Replicator\DI\ReplicatorExtension
-		);
-		$compiler->addExtension(
-			'nextras.forms',
-			new Nextras\Forms\DI\FormsExtension
-		);
-
-		return parent::setCompiler(
-			$compiler,
-			$name
-		);
-	}
-
 	public function getTranslationResources() : array
 	{
 		return [

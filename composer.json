@@ -1,5 +1,12 @@
 {
 	"name": "ytnuk/form",
+	"extra": {
+		"extensions": {
+			"ytnuk/form": "Ytnuk\\Form\\Extension",
+			"kdyby/replicator": "Kdyby\\Replicator\\DI\\ReplicatorExtension",
+			"nextras/forms": "Nextras\\Forms\\DI\\FormsExtension"
+		}
+	},
 	"require": {
 		"ytnuk/application": "dev-master",
 		"kdyby/translation": "dev-master",
