@@ -3,10 +3,11 @@ namespace Ytnuk\Form;
 
 use Kdyby;
 use Nette;
+use Nextras;
 use ReflectionProperty;
 
 final class Renderer
-	extends Nette\Forms\Rendering\DefaultFormRenderer
+	extends Nextras\Forms\Rendering\Bs3FormRenderer
 {
 
 	private $groups = [];
