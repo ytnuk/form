@@ -3,7 +3,6 @@ namespace Ytnuk\Form;
 
 use Kdyby;
 use Nette;
-use Nextras;
 use Ytnuk;
 
 final class Extension
@@ -15,7 +14,10 @@ final class Extension
 	 * @var array
 	 */
 	private $defaults = [
-		'renderer' => Nextras\Forms\Rendering\Bs3FormRenderer::class,
+		'renderer' => [
+			'class' => Renderer::class,
+			'wrappers' => [],
+		],
 		'forms' => [],
 	];
 
@@ -55,7 +57,19 @@ final class Extension
 			}
 		);
 		$builder = $this->getContainerBuilder();
-		$builder->addDefinition($this->prefix('renderer'))->setClass($this->config['renderer']);
+		$renderer = $builder->addDefinition($this->prefix('renderer'))->setClass($this->config['renderer']['class']);
+		if (is_a(
+			$this->config['renderer'],
+			Nette\Forms\Rendering\DefaultFormRenderer::class,
+			TRUE
+		)) {
+			$renderer->addSetup(
+				'$service->wrappers = array_merge_recursive($service->wrappers, ?)',
+				[
+					$this->config['renderer']['wrappers'],
+				]
+			);
+		}
 	}
 
 	public function getTranslationResources() : array
