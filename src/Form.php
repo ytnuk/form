@@ -15,10 +15,7 @@ abstract class Form
 	{
 		$control = $this->getControl();
 
-		return $control->flashMessage(
-			$message,
-			$type
-		);
+		return $control->flashMessage($message, $type);
 	}
 
 	protected function attached($control)
@@ -27,15 +24,9 @@ abstract class Form
 		if ( ! is_array($this->onSuccess)) {
 			$this->onSuccess = [];
 		}
-		array_unshift(
-			$this->onSuccess,
-			function () {
-				$this->flashMessage(
-					$this->formatFlashMessage('success'),
-					'success'
-				);
-			}
-		);
+		array_unshift($this->onSuccess, function () {
+			$this->flashMessage($this->formatFlashMessage('success'), 'success');
+		});
 		$this->onSuccess[] = function () {
 			if ( ! $this->getPresenter()->isAjax()) {
 				$this->getControl()->redirect('this');
@@ -44,24 +35,15 @@ abstract class Form
 		if ( ! is_array($this->onError)) {
 			$this->onError = [];
 		}
-		array_unshift(
-			$this->onError,
-			function () {
-				$this->flashMessage(
-					$this->formatFlashMessage('error'),
-					'danger'
-				);
-			}
-		);
+		array_unshift($this->onError, function () {
+			$this->flashMessage($this->formatFlashMessage('error'), 'danger');
+		});
 		if ( ! is_array($this->onSubmit)) {
 			$this->onSubmit = [];
 		}
-		array_unshift(
-			$this->onSubmit,
-			function () {
-				$this->getControl()->redrawControl();
-			}
-		);
+		array_unshift($this->onSubmit, function () {
+			$this->getControl()->redrawControl();
+		});
 	}
 
 	protected function getControl() : Nette\Application\UI\Control
@@ -75,29 +57,13 @@ abstract class Form
 			'form',
 		];
 		$button = $this->isSubmitted();
-		if ($button instanceof Nette\Forms\Controls\Button && $path = $button->lookupPath(
-				self::class,
-				FALSE
-			)
-		) {
-			$message = array_merge(
-				$message,
-				explode(
-					'-',
-					$path
-				)
-			);
+		if ($button instanceof Nette\Forms\Controls\Button && $path = $button->lookupPath(self::class, FALSE)) {
+			$message = array_merge($message, explode('-', $path));
 		}
 
-		return implode(
-			'.',
-			array_merge(
-				$message,
-				[
-					$type,
-					'message',
-				]
-			)
-		);
+		return implode('.', array_merge($message, [
+			$type,
+			'message',
+		]));
 	}
 }

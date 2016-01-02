@@ -30,15 +30,9 @@ final class Extension
 		) {
 			$form = $builder->addDefinition($this->prefix('form.' . $key))->setImplement($class);
 			if ($translator) {
-				$form->addSetup(
-					'setTranslator',
-					[$translator]
-				);
+				$form->addSetup('setTranslator', [$translator]);
 			}
-			$form->addSetup(
-				'setRenderer',
-				[$this->prefix('@renderer')]
-			);
+			$form->addSetup('setRenderer', [$this->prefix('@renderer')]);
 		}
 	}
 
@@ -47,28 +41,15 @@ final class Extension
 		parent::loadConfiguration();
 		$this->validateConfig($this->defaults);
 		$providers = $this->compiler->getExtensions(Provider::class);
-		array_walk(
-			$providers,
-			function (Provider $provider) {
-				$this->config = $this->validateConfig(
-					$this->config,
-					$provider->getFormResources()
-				);
-			}
-		);
+		array_walk($providers, function (Provider $provider) {
+			$this->config = $this->validateConfig($this->config, $provider->getFormResources());
+		});
 		$builder = $this->getContainerBuilder();
 		$renderer = $builder->addDefinition($this->prefix('renderer'))->setClass($this->config['renderer']['class']);
-		if (is_a(
-			$this->config['renderer'],
-			Nette\Forms\Rendering\DefaultFormRenderer::class,
-			TRUE
-		)) {
-			$renderer->addSetup(
-				'$service->wrappers = array_merge_recursive($service->wrappers, ?)',
-				[
-					$this->config['renderer']['wrappers'],
-				]
-			);
+		if (is_a($this->config['renderer'], Nette\Forms\Rendering\DefaultFormRenderer::class, TRUE)) {
+			$renderer->addSetup('$service->wrappers = array_merge_recursive($service->wrappers, ?)', [
+				$this->config['renderer']['wrappers'],
+			]);
 		}
 	}
 
