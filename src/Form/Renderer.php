@@ -71,8 +71,7 @@ final class Renderer
 					return NULL;
 				}
 				if ($container instanceof Kdyby\Replicator\Container) {
-					$container = (new Nette\Forms\ControlGroup)->add(...
-						array_values(iterator_to_array($container->getComponents(FALSE, Nette\Forms\IControl::class))));
+					$container = (new Nette\Forms\ControlGroup)->add(...array_values(iterator_to_array($container->getComponents(FALSE, Nette\Forms\IControl::class))));
 				}
 
 				return parent::renderControls($container);
